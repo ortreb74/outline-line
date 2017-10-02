@@ -40,7 +40,11 @@ public class Controler {
     public void processInput() {
         System.out.println(input.getText());
 
-        String requete = "insert into list values ('" + input.getText() +  "')";
+        String textToMySQL = textToMySQL(input.getText());
+
+        System.out.println(textToMySQL);
+
+        String requete = "insert into list values ('" + textToMySQL +  "')";
 
         System.out.println(requete);
 
@@ -54,6 +58,14 @@ public class Controler {
         }
 
         input.setText("");
+    }
+
+    private String textToMySQL(String text) {
+        // empiriquement :
+        // le \ est le caractère d'échapement
+        // https://stackoverflow.com/questions/13153697/how-to-replace-with-in-a-java-string
+
+        return text.replaceAll("\\\\","\\\\\\\\").replaceAll("'","\\\\'");
     }
 
 
